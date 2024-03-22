@@ -60,10 +60,10 @@ func DeleteMessage(sent *tgbotapi.Message) bool {
 	return err == nil
 }
 
-func RespondInlineQuery(id string, result any) *tgbotapi.APIResponse {
+func RespondInlineQuery(id string, result []any) *tgbotapi.APIResponse {
 	resp, err := Bot.Request(tgbotapi.InlineConfig{
 		InlineQueryID: id,
-		Results:       []any{result},
+		Results:       result,
 		CacheTime:     60,
 		IsPersonal:    true,
 	})

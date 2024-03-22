@@ -5,8 +5,9 @@ import (
 	. "github.com/sxyazi/bendan/utils"
 )
 
-var viaQuery = []func(*tgbotapi.InlineQuery) bool{
+var queryChain = []func(*tgbotapi.InlineQuery) any{
 	PurifyViaQuery,
+	EnhanceViaQuery,
 }
 
 var viaMessage = []func(*tgbotapi.Message) bool{
@@ -56,9 +57,12 @@ func Handle(update *tgbotapi.Update) {
 }
 
 func HandleQuery(query *tgbotapi.InlineQuery) {
-	for _, f := range viaQuery {
-		if f(query) {
-			break
+	var results []any
+	for _, f := range queryChain {
+		result := f(query)
+		if _, ok := result.(bool); !ok {
+			results = append(results, result)
 		}
 	}
+	RespondInlineQuery(query.ID, results)
 }

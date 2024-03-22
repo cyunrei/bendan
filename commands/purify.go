@@ -80,7 +80,7 @@ func Purify(msg *tgbotapi.Message) bool {
 	return true
 }
 
-func PurifyViaQuery(query *tgbotapi.InlineQuery) bool {
+func PurifyViaQuery(query *tgbotapi.InlineQuery) any {
 	ch := purifyDo(query.Query)
 	if ch == nil {
 		return false
@@ -97,7 +97,7 @@ func PurifyViaQuery(query *tgbotapi.InlineQuery) bool {
 		return false
 	}
 
-	result := tgbotapi.InlineQueryResultArticle{
+	return tgbotapi.InlineQueryResultArticle{
 		Type:  "article",
 		ID:    uuid.New().String(),
 		Title: utils.TruncateUTF8(text, 64),
@@ -105,6 +105,4 @@ func PurifyViaQuery(query *tgbotapi.InlineQuery) bool {
 			Text: text,
 		},
 	}
-	RespondInlineQuery(query.ID, result)
-	return true
 }
