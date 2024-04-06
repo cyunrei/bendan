@@ -108,6 +108,8 @@ func YesCan(msg *tgbotapi.Message) bool {
 		text = yesSel([2][]string{{"能", "能！", "能啊"}, {"不能", "不能！", "不可以！", "不，你不能"}}, token)
 	case '会':
 		text = yesSel([2][]string{{"会", "会！", "会的"}, {"不会", "不会啊", "不会的！"}}, token)
+	case '要':
+		text = yesSel([2][]string{{"要", "要！", "要吧"}, {"不要", "不要！", "不要吧！"}}, token)
 	}
 
 	ReplyText(msg, text)

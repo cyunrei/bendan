@@ -5,8 +5,8 @@ import (
 	"regexp"
 )
 
-var reCan1 = regexp.MustCompile(fmt.Sprintf(`\s*(.*?)\s*(能不能|会不会)\s*(.*?)(?:%s+|$)`, marks))
-var reCan2 = regexp.MustCompile(`\s*(.*?)\s*([能会][吗嘛吧罢])\s*[.?。？]*\s*$`)
+var reCan1 = regexp.MustCompile(fmt.Sprintf(`\s*(.*?)\s*(能不能|会不会|要不要)\s*(.*?)(?:%s+|$)`, marks))
+var reCan2 = regexp.MustCompile(`\s*(.*?)\s*(能|会|要|)\s*(.*?)\s*(吗|嘛|吧|罢|呢|)?\s*[.?。？]*\s*$`)
 
 func CanTokenize(s string) *Token {
 	ps := explode(s)
