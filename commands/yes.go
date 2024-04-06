@@ -2,6 +2,7 @@ package commands
 
 import (
 	"crypto/sha1"
+	"encoding/binary"
 	"math/rand"
 	"strings"
 
@@ -11,10 +12,13 @@ import (
 
 func yesSel(a [2][]string, t *yes.Token) string {
 	var s []string
-	if rand.Float64() > .9 {
+	if rand.Float64() >= .8 {
 		s = a[rand.Int()&1]
 	} else {
-		s = a[sha1.Sum([]byte(t.String()))[0]&1]
+		hash := sha1.Sum([]byte(t.String()))
+		seed := int64(binary.BigEndian.Uint64(hash[:8]))
+		rng := rand.New(rand.NewSource(seed))
+		s = a[rng.Int()&1]
 	}
 	return s[rand.Intn(len(s))]
 }
